@@ -11,6 +11,15 @@
 |
 */
 
+use App\Product;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/model', function() {
+
+    Product = \App\Product::all(); //select = from products
+
+    return $products;
 });
