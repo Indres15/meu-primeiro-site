@@ -12,6 +12,7 @@
 */
 
 use App\Product;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/model', function() {
 
-    Product = \App\Product::all(); //select = from products
+    $Products = Product::all(); //select * from products
 
-    return $products;
+    return $Products;
 });
