@@ -20,7 +20,14 @@ Route::get('/', function () {
 
 Route::get('/model', function() {
 
-    $Products = Product::all(); //select * from products
+   // $Products = Product::all(); //select * from products
 
-    return $Products;
+   $user = new \App\User();
+   $user ->name ='Teste';
+   $user ->email ='email@teste.com';
+   $user ->password = bcrypt('12345678');
+
+    //return $user->save();
+
+    return \App\User::all();
 });
