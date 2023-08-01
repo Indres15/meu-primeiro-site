@@ -38,5 +38,21 @@ Route::get('/model', function() {
 
     //Mas Assigment - Atribuição em massa
 
-      return \App\User::all();
+      // return \App\User::create([
+      //   'name' =>'Fernanda indres',
+      //   'email' =>'email112@teste.com',
+      //   'password' => bcrypt('12345678')
+
+      // ]);
+      // add($user);
+
+      //mas Update 
+      $user =  \App\User::find(43);
+      $user->update([
+          'name' => 'atualzando com Mass Update'
+      ]); //true ou false
+
+
+        return \App\User::all();
+     
 });
