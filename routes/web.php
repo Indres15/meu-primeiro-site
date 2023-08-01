@@ -36,5 +36,7 @@ Route::get('/model', function() {
     // \App\User::where('name', 'Amaya Grady')->first(); //select * from users where name = Amaya Grady
     // \App\User::paginate(10); - paginar dados com o laravel
 
-      return;
+    //Mas Assigment - Atribuição em massa
+
+      return \App\User::all();
 });
