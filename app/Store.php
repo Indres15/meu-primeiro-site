@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App;
@@ -7,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
-    public funcion user()
+    public function user()
     {
-        $this->belonsTo(User::class);
+       return $this->belonsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
