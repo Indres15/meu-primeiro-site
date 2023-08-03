@@ -47,11 +47,11 @@ Route::get('/model', function() {
       // add($user);
 
       //mas Update 
-      $user =  \App\User::find(43);
-      $user->update([
-          'name' => 'atualzando com Mass Update'
-      ]); //true ou false
-
+      // $user =  \App\User::find(43);
+      // $user->update([
+      //     'name' => 'atualzando com Mass Update'
+      // ]); //true ou false
+      
 
         return \App\User::all();
      
