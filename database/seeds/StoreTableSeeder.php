@@ -13,7 +13,7 @@ class StoreTableSeeder extends Seeder
     {
        $stores = \App\Store::all();
 
-       fereach($stores as $store)
+       foreach($stores as $store)
        {
             $store->products()->save(factory(\App\Product::class)->make());
        }
