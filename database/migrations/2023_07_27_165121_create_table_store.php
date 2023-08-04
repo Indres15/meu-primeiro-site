@@ -15,15 +15,18 @@ class CreateTableStore extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome');
+            $table->unsignedBigInteger('user_id');
+            
+            $table->string('name');
             $table->string('description');
             $table->string('phone');
             $table->string('mobile_phone');
             $table->string('slug');
           
-
-            
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+        
         });
     }
 
