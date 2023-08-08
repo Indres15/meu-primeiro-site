@@ -46,7 +46,7 @@ Route::get('/model', function() {
       // ]);
       // add($user);
 
-      //mas Update 
+      //mas Update
       // $user =  \App\User::find(43);
       // $user->update([
       //     'name' => 'atualzando com Mass Update'
@@ -67,7 +67,7 @@ Route::get('/model', function() {
       // $categoria = \App\Category::find(1);
       // $categoria->products;
 
-  //criar uma loja para um usário 
+  //criar uma loja para um usário
       // $user = \App\User::find (10);
       // $store = $user->store()->create([
       //   'name' => 'loja teste',
@@ -76,7 +76,7 @@ Route::get('/model', function() {
       //   'phone' => 'xx-xxxxx-xxxx',
       //   'slug' => 'loja-teste',
       // ]);
-      
+
       // dd($store);
 
   //Criar u produti para uma loja
@@ -104,18 +104,18 @@ Route::get('/model', function() {
     //   'slug' => 'Notebooks'
     //   ]);
 
-    //     return \App\Category::all();
+    //    return \App\Category::all();
 
   //Adicionar um produto para uma categoria ou vice-versa
 
-//   $product = \App\Product::find(1);
-
-//   dd($product->categories()->sync([2]));
+    //   dd($product->categories()->sync([2]));
 
         $product = \App\Product::find(1);
 
         return $product->categories;
 
       //return \App\User::all();
-     
+
 });
+
+Route::get('/admin/stores', 'Admin\\StoreController@index');
