@@ -108,10 +108,14 @@ Route::get('/model', function() {
 
   //Adicionar um produto para uma categoria ou vice-versa
 
-  $product = \App\Product::find(50);
-  dd($product->categories()->attach([1]));
+//   $product = \App\Product::find(1);
 
+//   dd($product->categories()->sync([2]));
 
-      return \App\User::all();
+        $product = \App\Product::find(1);
+
+        return $product->categories;
+
+      //return \App\User::all();
      
 });
