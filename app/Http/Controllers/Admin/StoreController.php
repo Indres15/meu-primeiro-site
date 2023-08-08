@@ -11,6 +11,6 @@ class StoreController extends Controller
     {
         $stores = \App\Store::all();
 
-        return $stores;
+        return view('admin.store.index', compact('stores'));
     }
 }
