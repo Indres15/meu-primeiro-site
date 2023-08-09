@@ -9,8 +9,19 @@ class StoreController extends Controller
 {
     public function index()
     {
-        $stores = \App\Store::all();
+        $stores = \App\Store::paginate(10);
 
-        return view('admin.store.index', compact('stores'));
+        return view('admin.stores.index', compact('stores'));
+    }
+
+    public function create()
+    {
+        $users = \App\User::all(['id','name']);
+
+        return view('admin.stores.create', compact('users'));
+    }
+    public function store(Request $request)
+    {
+
     }
 }
