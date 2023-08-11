@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <table>
     <thead>
         <tr>
@@ -19,3 +22,4 @@
 </table>
 
 {{$stores->links()}}
+@endsection

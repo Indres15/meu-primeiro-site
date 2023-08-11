@@ -118,6 +118,20 @@ Route::get('/model', function() {
 
 });
 
-Route::get('/admin/stores', 'Admin\\StoreController@index');
-Route::get('/admin/stores/create', 'Admin\\StoreController@create');
-Route::post('/admin/stores/store', 'Admin\\StoreController@store');
+
+
+route::prefix('admin')->namespace('Admin')->group(function(){
+  
+  route::prefix('stores')->group(function(){
+    Route::get('/', 'StoreController@index');
+    Route::get('/create', 'StoreController@create');
+    Route::post('/store', 'StoreController@store');
+  });
+
+});
+  
+
+
+
+
+
