@@ -104,7 +104,7 @@ Route::get('/model', function() {
     //   'slug' => 'Notebooks'
     //   ]);
 
-    //    return \App\Category::all();
+    //     return \App\Category::all();
 
   //Adicionar um produto para uma categoria ou vice-versa
 
@@ -121,7 +121,7 @@ Route::get('/model', function() {
 
 
 route::prefix('admin')->namespace('Admin')->group(function(){
-  
+
   route::prefix('stores')->group(function(){
     Route::get('/', 'StoreController@index');
     Route::get('/create', 'StoreController@create');
@@ -129,7 +129,7 @@ route::prefix('admin')->namespace('Admin')->group(function(){
   });
 
 });
-  
+
 
 
 
