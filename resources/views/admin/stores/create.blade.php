@@ -37,7 +37,7 @@
                 @endforeach
             </select>
         <div>
-        <button type="submit"> Criar loja</button>
+        <button type="submit" class="btn btn-lg btn-success">Criar loja</button>
         </div>
     </div>
 </form>
