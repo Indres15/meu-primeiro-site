@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<table class='table table-strip'>
+<table class='table table-striped'>
     <thead>
         <tr>
             <th>#</th>
