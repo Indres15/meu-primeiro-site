@@ -39,7 +39,13 @@ class StoreController extends Controller
     
     public function update(Request $request, $store)
     {
-        dd($request->all());
+        $data = ($request->all());
+
+        $store = \App\Store::find($store);
+        $store->update($data);
+
+        return $store;
     }    
+
     
 }
