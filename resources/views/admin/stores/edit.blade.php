@@ -31,7 +31,7 @@
 
         
         <div>
-            <button type="submit" class="btn btn-lg btn-success">Criar loja</button>
+            <button type="submit" class="btn btn-lg btn-success">Atualizar loja</button>
         </div>
     </div>
 </form>
