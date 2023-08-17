@@ -128,7 +128,7 @@ route::prefix('admin')->name('admin.')->namespace('Admin')->group(function(){
     Route::post('/store', 'StoreController@store')->name('store');
     Route::get('/{store}/edit', 'StoreController@edit')->name('edit');
     Route::post('/update/{store}', 'StoreController@update')->name('update');
-    Route::get('/destroy/{stores}', 'StoreController@destroy')->name('destroy');
+    Route::get('/destroy/{store}', 'StoreController@destroy')->name('destroy');
   });
 
 });
