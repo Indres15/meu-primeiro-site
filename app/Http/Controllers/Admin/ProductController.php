@@ -55,9 +55,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($product)
+    public function show($product, $id)
     {
-        //
+      //
     }
 
     /**
@@ -93,6 +93,6 @@ class ProductController extends Controller
      */
     public function destroy($product)
     {
-        //
+        return $product;
     }
 }
