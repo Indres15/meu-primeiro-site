@@ -21,7 +21,10 @@
             <td>{{$p->name}}</td>
             <td>
                <a href="{{route('admin.products.edit', ['product' => $p->id])}}" class="btn btn-outline-primary">EDITAR</a> 
-               <a href="{{route('admin.products.destroy', ['product' => $p->id])}}" class="btn btn-sm btn-outline-danger">REMOVER</a>    
+               <form action="{{route('admin.products.destroy', ['product' => $p->id])}}"></form>
+               @csrf
+               @method('DELETE')
+               <button type="submit" class="btn btn-sm btn-outline-danger">REMOVER</button>  
             </td> 
         </tr>
         @endforeach
