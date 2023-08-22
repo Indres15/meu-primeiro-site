@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
-       /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -15,7 +15,7 @@ class StoreController extends Controller
      */
     public function show($product, $id)
     {
-      //
+        //
     }
 
     public function index()
@@ -27,7 +27,7 @@ class StoreController extends Controller
 
     public function create()
     {
-        $users = \App\User::all(['id','name']);
+        $users = \App\User::all(['id', 'name']);
 
         return view('admin.stores.create', compact('users'));
     }
@@ -48,7 +48,7 @@ class StoreController extends Controller
 
         return view('admin.stores.edit', compact('store'));
     }
-    
+
     public function update(Request $request, $store)
     {
         $data = ($request->all());
@@ -58,7 +58,7 @@ class StoreController extends Controller
 
         flash('Loja Atualizada com Sucesso')->success();
         return redirect()->route('admin.stores.index');
-    }    
+    }
 
     public function destroy($store)
     {
@@ -69,5 +69,4 @@ class StoreController extends Controller
         flash('Loja Removida com Sucesso')->success();
         return redirect()->route('admin.stores.index');
     }
-    
 }
