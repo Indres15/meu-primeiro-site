@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class StoreController extends Controller
 {
+       /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($product, $id)
+    {
+      //
+    }
+
     public function index()
     {
         $stores = \App\Store::paginate(10);
