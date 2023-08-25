@@ -35,7 +35,6 @@ class StoreController extends Controller
     {
         $data = $request->all();
         $user = auth()->user();
-
         $store = $user->store()->create($data);
 
         flash('Loja Criada com Sucesso')->success();
