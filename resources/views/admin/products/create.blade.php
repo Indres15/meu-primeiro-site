@@ -8,28 +8,52 @@
 
         <div class="form-group">
             <label>Nome Loja</label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                value="{{ old('name') }}">
+
+            @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>Descrição</label>
-            <input type="text" name="description" class="form-control">
+            <input type="text" name="description" class="form-control @error('description') is-invalid @enderror"
+                value="{{ old('description') }}">
+
+            @error('description')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
-            <label>Cnteúdo</label>
-            <textarea name="bory" id="" cols="30" rows="10" class="form-control"></textarea>
+            <label>Conteúdo</label>
+            <textarea name="bory" id="" cols="30" rows="10"
+                class="form-control @error('bory') is-invalid @enderror" value="{{ old('bory') }}"></textarea>
+
+            @error('bory')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label>preço</label>
-            <input type="text" name="price" class="form-control">
+            <input type="text" name="price" class="form-control @error('price') is-invalid @enderror"
+                value="{{ old('price') }}">
+
+            @error('price')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
         </div>
 
-        <div class="form-group">
-            <label>Celular/Whatsapp</label>
-            <input type="text" name="mobile_phone" class="form-control">
-        </div>
 
         <div class="form-group">
             <label>Slug</label>
@@ -37,15 +61,10 @@
         </div>
 
         <div class="form-group">
-            <label>Loja</label>
-            <select name="store">
-                @foreach($stores as $store)
-            <option value="{{$store->id}}">{{$store->name}}</option>
-                @endforeach
-            </select>
-        <div>
-        <button type="submit" class="btn btn-lg btn-success">Criar Produto</button>
+
+            <div>
+                <button type="submit" class="btn btn-lg btn-success">Criar Produto</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 @endsection
