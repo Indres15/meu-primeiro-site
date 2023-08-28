@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use App\Product;
 
 class ProductController extends Controller
@@ -44,7 +44,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $data = $request->all();
 
@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function show($product, $id)
     {
-      //
+        //
     }
 
     /**
@@ -74,7 +74,7 @@ class ProductController extends Controller
      */
     public function edit($product)
     {
-       $product = $this->product->findOrFail($product);
+        $product = $this->product->findOrFail($product);
 
         return view('admin.products.edit', compact('product'));
     }
@@ -86,7 +86,7 @@ class ProductController extends Controller
      * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $product)
+    public function update(ProductRequest $request, $product)
     {
         $data = $request->all();
 
