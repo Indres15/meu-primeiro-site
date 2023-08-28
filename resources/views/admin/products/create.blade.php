@@ -7,7 +7,7 @@
         @csrf
 
         <div class="form-group">
-            <label>Nome Loja</label>
+            <label>Nome Produto</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                 value="{{ old('name') }}">
 
