@@ -22,13 +22,19 @@ class StoreController extends Controller
 
     public function index()
     {
-        $stores = \App\Store::paginate(10);
+        $store = auth()->user()->store;
 
-        return view('admin.stores.index', compact('stores'));
+        return view('admin.stores.index', compact('store'));
     }
 
     public function create()
     {
+        if(auth()->user()->store()->count()) {
+            flash('Você já possui uma loja') warning();
+            return redirect()->route('admin.stores.index');
+
+        }
+
         $users = \App\User::all(['id', 'name']);
 
         return view('admin.stores.create', compact('users'));
