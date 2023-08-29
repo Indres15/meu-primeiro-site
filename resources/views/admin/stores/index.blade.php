@@ -2,7 +2,7 @@
 
 
 @section('content')
-    @if (!store)
+    @if (!$store)
         <a href="{{ route('admin.stores.create') }}" class="btn btn-lg btn-success">Criar Loja</a>
     @endif
 
@@ -11,6 +11,7 @@
             <tr>
                 <th>#</th>
                 <th>loja</th>
+                <th>Total de Produtos</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -20,6 +21,7 @@
             <tr>
                 <td>{{ $store->id }}</td>
                 <td>{{ $store->name }}</td>
+                <td>{{ $store->products->count() }}</td>
                 <td>
                     <div class="btn-group">
 
