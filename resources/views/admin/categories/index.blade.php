@@ -1,8 +1,7 @@
 @extends('layouts.app')
-''
 
 @section('content')
-    {{-- <a href="{{ route('admin.category.create') }}" class="btn btn-lg btn-success">Criar Categoria</a> --}}
+    <a href="{{ route('admin.categories.create') }}" class="btn btn-lg btn-success">Criar Categoria</a>
 
     <table class='table table-striped'>
         <thead>
@@ -13,15 +12,16 @@
             </tr>
         </thead>
 
-        <body>
+        <tbody>
             @foreach ($categories as $category)
                 <tr>
                     <td>{{ $category->id }}</td>
                     <td>{{ $category->name }}</td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}"
-                                class="btn btn-sm btn-outline-primary">EDITAR</a>
+                            <a class="btn btn-sm btn-outline-primary"
+                                href="{{ route('admin.categories.edit', ['category' => $category->id]) }}">EDITAR</a>
+
                             <form action="{{ route('admin.categories.destroy', ['category' => $category->id]) }}"
                                 method="post">
                                 @csrf
@@ -32,7 +32,7 @@
                     </td>
                 </tr>
             @endforeach
-        </body>
+        </tbody>
     </table>
 
     {{ $categories->links() }}

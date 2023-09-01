@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
+use Laracasts\Flash\Flash;
 
 class CategoryController extends Controller
 {
@@ -18,7 +20,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->category->paginate(10);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -28,6 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        return view('admin.categories.create');
     }
 
     /**
@@ -36,8 +39,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request)
+    public function store(CategoryRequest $request)
     {
+        $data = $request->all();
+
+        $category = $this->category->create($data);
+
+        flash('categoria criada com sucesso!')->success();
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -57,8 +66,11 @@ class CategoryController extends Controller
      * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($product)
+    public function edit($category)
     {
+        $category = $this->category->findOrfail($category);
+
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -68,8 +80,15 @@ class CategoryController extends Controller
      * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function update($request, $product)
+    public function update(CategoryRequest $request, $category)
     {
+        $data = $request->all();
+
+        $category = $this->category->find($category);
+        $category->update($data);
+
+        Flash('Categoria Atualizada com Sucesso!')->success();
+        return redirect()->route('admin.categories.index');
     }
 
     /**
@@ -78,7 +97,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($product)
+    public function destroy($category)
     {
+        $category = $this->category->find($category);
+        $category->delete();
+
+        Flash('Categoria removida com sucesso!')->success();
+        return redirect()->route('admin.categories.index');
     }
 }

@@ -16,7 +16,7 @@
             </tr>
         </thead>
 
-        <body>
+        <tbody>
 
             <tr>
                 <td>{{ $store->id }}</td>
@@ -36,6 +36,6 @@
                 </td>
             </tr>
 
-        </body>
+        </tbody>
     </table>
 @endsection
