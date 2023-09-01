@@ -50,7 +50,7 @@ class ProductController extends Controller
         $data = $request->all();
 
         $store = User::find(auth()->id())->store;
-        $produc = $store->products()->create($data);
+        $product = $store->products()->create($data);
 
         $product->categories()->sync($data['categories']);
 
