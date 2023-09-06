@@ -30,8 +30,10 @@
             <label>Categorias</label>
             <select name="categories[]" id="" class="form-control" multiple>
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}" @if ($product->categories->contains($category)) selected @endif>
-                        {{ $category->name }}</option>
+
+                    <option value="{{ $category->id }}" 
+                        @if ($product->categories->contains($category)) selected @endif
+                        >{{ $category->name }}</option> 
                 @endforeach
             </select>
         </div>
@@ -42,7 +44,6 @@
         </div>
 
         <button type="submit" class="btn btn-lg btn-success">Atualizar Produto</button>
-        </div>
-        </div>
+
     </form>
 @endsection
