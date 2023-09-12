@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use App\User;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -54,6 +55,12 @@ class ProductController extends Controller
         $product = $store->products()->create($data);
 
         $product->categories()->sync($data['categories']);
+
+        if($request->hasFile('photos')) {
+            $images = $this->imageUpload($request, 'image');
+
+            $product->photos()->createMany($images);
+        }
 
         flash('Produto Criado com Sucesso!')->success();
         return redirect()->route('admin.products.index');
@@ -117,5 +124,17 @@ class ProductController extends Controller
 
         flash('Produto Removido com Sucesso!')->success();
         return redirect()->route('admin.products.index');
+    }
+
+    private function imageUpload(Request $request, $imageColumn)
+    {
+        $images = $request->file('photos');
+
+        $uploadedImages = [];
+
+        foreach($images as $image) {
+            $uploadedImage[] = [$imageColumn => $image->store('products', 'public')];
+        }
+        return $uploadedImages;
     }
 }
