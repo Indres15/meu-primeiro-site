@@ -10,6 +10,6 @@ class ProductPhoto extends Model
     
     public function ptoduct()
     {
-        return $this->brlongsTo(product::class);
+        return $this->brlongsTo(Product::class);
     }
 }
