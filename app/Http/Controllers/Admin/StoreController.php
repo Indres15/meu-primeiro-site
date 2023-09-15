@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRequest;
+use App\Traits\UploadTrait;
 use App\User;
 
 class StoreController extends Controller
 {
+    use UploadTrait;
     /**
      * Display the specified resource.
      *
@@ -44,6 +46,11 @@ class StoreController extends Controller
     {
         $data = $request->all();
         $user = User::find(auth()->id());   // $user auth()->user();
+
+        if($request->hasFile('logo')) {
+            $data['logo'] = $this->imageUpload($request);
+        }
+
         $store = $user->store()->create($data);
 
         flash('Loja Criada com Sucesso')->success();
