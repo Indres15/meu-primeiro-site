@@ -8,7 +8,7 @@
 
         <div class="form-group">
             <label>Nome Loja</label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control" value="{{ $store->name }}">
         </div>
 
         <div class="form-group">
@@ -27,6 +27,10 @@
         </div>
 
         <div class="form-group">
+            <p>
+                <img src="{{ asset('storage/' . $store->logo) }}" alt="">
+            </p>
+
             <label>Fotos do Produto</label>
             <input type="file" name="logo" class="form-control">
         </div>

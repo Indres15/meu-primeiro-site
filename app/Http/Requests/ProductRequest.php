@@ -29,13 +29,15 @@ class ProductRequest extends FormRequest
             'description'   => 'required',
             'bory'          => 'required|min:30',
             'price'         => 'required',
+            'photos'        => 'image'
         ];
     }
     public function messages()
     {
         return [
             'required' => 'este campo é obrigatório',
-            'min' => 'Campo deve ter no mínimo :min caracteres'
+            'min'      => 'Campo deve ter no mínimo :min caracteres',
+            'image'    => 'Arquivo não é uma imagemválida!'
         ];
     }
 }
