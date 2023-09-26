@@ -24,11 +24,6 @@
             <input type="text" name="description" class="form-control" value="{{ $category->description }}">
         </div>
 
-        <div class="form-group">
-            <label>Slug</label>
-            <input type="text" name="slug" class="form-control" value="{{ $category->slug }}">
-        </div>
-
         <button type="submit" class="btn btn-lg btn-success">Atualizar Categoria</button>
         </div>
         </div>
