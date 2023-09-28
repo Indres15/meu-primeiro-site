@@ -16,6 +16,9 @@
                         <p class="card-text">
                             {{ $product->description }}
                         </p>
+                        <a href="{{ route('product.single', ['slug' => $product->slug]) }}" class="btn btn-success">
+                            Ver Produto
+                        </a>
                     </div>
                 </div> 
             </div> 

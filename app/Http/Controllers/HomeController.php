@@ -24,4 +24,9 @@ class HomeController extends Controller
 
         return view('welcome', compact('products'));
     }
+
+    public function single($slug)
+    {
+        print $slug;
+    }
 }
