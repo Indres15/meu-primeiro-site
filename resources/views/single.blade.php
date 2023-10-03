@@ -38,10 +38,14 @@
             <div class="product-add col-md-12">
                 <hr>
                 
-                <form action="" method="post">
+                <form action="{{ route('cart.add') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="product[name]" value="{{ $product->name }}">
+                    <input type="hidden" name="product[price]"value="{{ $product->price }}">
+                    <input type="hidden" name="product[slug]"value="{{ $product->slug }}">
                     <div class="form-group">
                         <label>Quantidade</label>
-                        <input type="number" class="form-control col-md-2">
+                        <input type="number" name="product[amount]" class="form-control col-md-2" value="1">
                     </div>
                     <button class="btn btn-lg btn-danger">Comprar</button>
                 </form>
