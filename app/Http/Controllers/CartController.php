@@ -21,7 +21,7 @@ class CartController extends Controller
             session()->put('cart', $products);
 
         }
-        flash('Produto Adicionado no carrinho!')->success();
+        flash('Produto Adicionado no Carrinho!')->success();
         return redirect()->route('product.single', ['slug' => $product['slug']]);
     }
 }
