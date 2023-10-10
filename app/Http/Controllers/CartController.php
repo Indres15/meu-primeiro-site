@@ -52,4 +52,17 @@ class CartController extends Controller
         flash('Cancelamento realizado com sucesso!')->success();
         return redirect()->route('cart.index');
     }
+
+    private function productIncrement($slug, $amount, $products)
+    {
+        $products = array_map(function($line) use($slug, $amount){
+
+            if($slug == $line['slug']){
+                $line['amount'] += $amount;
+            }
+            return $line;
+        }, $products);
+
+        return $products;
+    }
 }
