@@ -9,6 +9,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->has('cart') ? session()->get('cart') : [];
+        dd(session('cart'));
 
         return view('cart', compact('cart'));
     }
@@ -19,7 +20,18 @@ class CartController extends Controller
 
         if(session()->has('cart')) {
 
-            session()->push('cart', $product);
+            $products = session()->get('cart');
+            $productsSlugs = array_column($products, 'slug');
+
+            if(in_array($product['slug'], $productsSlugs)) {
+                $products = $this->productIncrement($product['slug'], $product['amount'], $products);
+
+                session()->push('cart', $products);
+
+            } else{
+
+                session()->push('cart', $product);
+            }
 
         } else {
 
