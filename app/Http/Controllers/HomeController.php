@@ -20,14 +20,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $products = $this->product->limit(8)->orderBy('id', 'DESC')->get();
+      $products = $this->product->limit(9)->orderBy('id', 'DESC')->get();
 
         return view('welcome', compact('products'));
     }
 
     public function single($slug)
     {
-        $product = $this->product->whereSlug($slug)->first();
+        $product = $this->product->whereSlug($slug)->firstOrfail();
 
         return view('single', compact('product'));
     }

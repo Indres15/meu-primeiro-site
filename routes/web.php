@@ -28,6 +28,10 @@ Route::prefix('cart')->name('cart.')->group(function(){
 
 });
 
+Route::prefix('checkout')->name('chekout.')->group(function(){
+  Route::get('/', 'CheckoutController@index')->name('index');
+});
+
 Route::get('/model', function () {
 
   // $Products = Product::all(); //select * from products
