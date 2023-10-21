@@ -52,6 +52,7 @@
     @include('flash::message')
     @yield('content')
 </div>
+@yield('scripts')
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
 </body>
 </html>

@@ -42,3 +42,19 @@
         </div>
     </div>
 @endsection
+
+@section('scripts')
+    <script src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script>
+        const sessionId = '{{ session()->get('pagseguro_session_code') }}';
+
+        PagSeguroDirectPayment.setSessionId(sessionId);
+    </script>
+
+    <script>
+        let cardNumber = document.querySelector('input[name=card_number]');
+        cardNumber.addEventListener('Keyup', function(){
+            console.log(cardNumber.value);
+        });
+    </script>
+@endsection
