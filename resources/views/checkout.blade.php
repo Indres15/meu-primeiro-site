@@ -110,11 +110,11 @@
             let data = {
                 card_token: token,
                 hash: PagSeguroDirectPayment.getSenderHash(),
-                installment: document.querySelector('.select_installments').value,
+                installment: document.querySelector('select.select_installments').value,
                 _token: '{{ csrf_token() }}'
             };
 
-            $.ajex({
+            $.ajax({
                 type: 'POST',
                 url: '{{ route('checkout.proccess') }}',
                 data: data,
