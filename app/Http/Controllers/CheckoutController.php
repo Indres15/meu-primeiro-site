@@ -14,14 +14,20 @@ class CheckoutController extends Controller
         }
         $this->makePagSeguroSession();
 
-        var_dump(session()->get('pagseguro_session_code'));
+        $cartItems = array_map(function ($line) {
+            return $line['amount'] * $line['price'];
+        }, session()->get('cart'));
 
-        return view('checkout');
+        $cartItems = array_sum($cartItems);
+
+        //var_dump(session()->get('pagseguro_session_code'));
+
+        return view('checkout', compact('cartItems'));
     }
 
     public function proccess(Request $request)
     {
-       //Instantiate a new direct payment request, using Credit Card
+        //Instantiate a new direct payment request, using Credit Card
         $creditCard = new \PagSeguro\Domains\Requests\DirectPayment\CreditCard();
 
         /**
@@ -41,9 +47,9 @@ class CheckoutController extends Controller
 
         $cartItems = session()->get('cart');
 
-        foreach($cartItems as $item){
-        // Add an item for this payment request "Adicionando os itens que estão na sessãopara serem enviados para o SDK
-        $creditCard->addItems()->withParameters(
+        foreach ($cartItems as $item) {
+            // Add an item for this payment request "Adicionando os itens que estão na sessãopara serem enviados para o SDK
+            $creditCard->addItems()->withParameters(
                 $reference,
                 $item['name'],
                 $item['amount'],
@@ -100,6 +106,7 @@ class CheckoutController extends Controller
         // Set credit card token
         $creditCard->setToken($dataPost['card_token']);
         list($quantity, $installmentAmount) = explode('|', $dataPost['installment']);
+        $installmentAmount = number_format($installmentAmount, 2, '.', '');
 
         // Set the installment quantity and value (could be obtained using the Installments
         // service, that have an example here in \public\getInstallments.php)
