@@ -117,7 +117,7 @@
                 card_token: token,
                 hash: PagSeguroDirectPayment.getSenderHash(),
                 installment: document.querySelector('select.select_installments').value,
-                card_name: document.querySelector('input[name=Card_name]').value,
+                card_name: document.querySelector('input[name=card_name]').value,
                 _token: '{{ csrf_token() }}'
             };
 
