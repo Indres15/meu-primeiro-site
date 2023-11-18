@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Payment\PagSeguro;
 
 class CreditCard
- {
+{
     private $items;
     private $user;
     private $cardInfo;
@@ -13,7 +14,7 @@ class CreditCard
         $this->items = $items;
         $this->user = $user;
         $this->cardInfo = $cardInfo;
-        $this->reference = $reference;        
+        $this->reference = $reference;
     }
 
     public function doPayment()
@@ -28,7 +29,7 @@ class CreditCard
         // Set the currency
         $creditCard->setCurrency("BRL");
 
-        
+
         foreach ($this->items as $item) {
             // Add an item for this payment request "Adicionando os itens que estão na sessãopara serem enviados para o SDK
             $creditCard->addItems()->withParameters(
@@ -117,5 +118,4 @@ class CreditCard
 
         return $result;
     }
-
 }

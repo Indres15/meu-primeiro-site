@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Payment\PagSeguro\CreditCard;
+use Exception;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-        // session()->forget('pagseguro_session_code');
+        //  session()->forget('pagseguro_session_code');
         if (!auth()->check()) {
             return redirect()->route('login');
         }
+        if (!session()->has('cart')) return redirect()->route('home');
         $this->makePagSeguroSession();
 
         $cartItems = array_map(function ($line) {
@@ -28,39 +30,52 @@ class CheckoutController extends Controller
 
     public function proccess(Request $request)
     {
-        //Instantiate a new direct payment request, using Credit Card
-        //$creditCard = new \PagSeguro\Domains\Requests\DirectPayment\CreditCard();
+        try {
+            $dataPost = $request->all();
+            $user = auth()->user();
+            $cartItems = session()->get('cart');
+            $reference = 'XPTO';
 
-        /**
-         * @todo Change the receiver Email
-         */
-        $dataPost = $request->all();
-        $user = auth()->user();
-        $cartItems = session()->get('cart');
-        $reference = 'XPTO';
+            $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
+            $result = (object) $creditCardPayment->doPayment();
 
-        $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
-        $result =(object) $creditCardPayment->doPayment();
+            $userOrder = [
+                'reference' => $reference,
+                'pagseguro_code' => $result->getCode(),
+                'pagseguro_status' => $result->getStatus(),
+                'items' => serialize($cartItems),
+                'store_id' => 40
+            ];
 
-        $userOrder = [
-            'reference' => $reference,
-            'pagseguro_code' => $result->getCode(),
-            'pagseguro_status' => $result->getStatus(),
-            'items' => serialize($cartItems),
-            'store_id' => 42
-        ];
+            $user->orders()->create($userOrder);
 
-        $user->orders()->create($userOrder);
+            session()->forget('cart');
+            session()->forget('pagseguro_session_code');
 
-        return response()->json([
+
+            return response()->json([
                 'data' => [
                     'status' => true,
-                    'message' => 'Pedido criado com sucesso'
+                    'message' => 'Pedido criado com sucesso',
+                    'order'   => $reference
                 ]
             ]);
+        } catch (\Exception $e) {
+            $message = env('APP_DEBUG') ? $e->getMessage() : 'Erro ao processar pedido';
 
-        // Set a reference code for this payment request. It is useful to identify this payment
-        // in future notifications.
+            return response()->json([
+                'data' => [
+                    'status' => false,
+                    'message' => $message
+
+                ]
+            ], 401);
+        }
+    }
+
+    public function thanks()
+    {
+        return view('thanks');
     }
 
     private function makePagSeguroSession()
