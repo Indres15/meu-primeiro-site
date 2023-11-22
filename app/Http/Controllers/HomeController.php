@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -20,14 +21,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $products = $this->product->limit(9)->orderBy('id', 'DESC')->get();
+        $products = $this->product->limit(6)->orderBy('id', 'DESC')->get();
+        $stores = \App\Store::Limit(3)->orderBy('id', 'DESC')->get();
 
-        return view('welcome', compact('products'));
+
+        return view('welcome', compact('products', 'stores'));
     }
 
     public function single($slug)
     {
-        $product = $this->product->whereSlug($slug)->firstOrfail();
+        $product = $this->product->whereSlug($slug)->first();
 
         return view('single', compact('product'));
     }
