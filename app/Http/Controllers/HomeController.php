@@ -21,8 +21,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = $this->product->limit(6)->orderBy('id', 'DESC')->get();
-        $stores = \App\Store::Limit(3)->orderBy('id', 'DESC')->get();
+        $products   = $this->product->limit(6)->orderBy('id', 'DESC')->get();
+        $stores     = \App\Store::Limit(3)->orderBy('id', 'DESC')->get();
 
 
         return view('welcome', compact('products', 'stores'));
