@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/product/{slug}', 'HomeController@single')->name('product.single');
+Route::get('/category/{slug}', 'CategoryController@index')->name('category.single');
+Route::get('/store/{slug}', 'StoreController@index')->name('store.single');
 
 Route::prefix('cart')->name('cart.')->group(function () {
-
     Route::get('/', 'CartController@index')->name('index');
     Route::post('add', 'CartController@add')->name('add');
 
@@ -137,7 +138,7 @@ Route::get('/model', function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
 
-        /*     Route::prefix('stores')->name('stores.')->group(function(){
+        /*Route::prefix('stores')->name('stores.')->group(function(){
 
        Route::get('/', 'StoreController@index')->name('index');
        Route::get('/create', 'StoreController@create')->name('create');

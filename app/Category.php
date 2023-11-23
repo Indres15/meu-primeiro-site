@@ -8,23 +8,22 @@ use Spatie\Sluggable\SlugOptions;
 
 class Category extends Model
 {
-  use HasSlug;
-  
-   protected $fillable = ['name', 'description', 'slug'];
+    use HasSlug;
 
-       /**
+    protected $fillable = ['name', 'description', 'slug'];
+
+    /**
      * get the options for gererating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
-    
-   public function products()
-   {
-     return $this->belongsToMany(Product::class,'categories_products');
-   }
 
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'categories_products');
+    }
 }

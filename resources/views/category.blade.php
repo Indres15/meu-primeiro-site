@@ -3,7 +3,11 @@
 
 @section('content')
     <div class="row front">
-        @foreach ($products as $key => $product)
+        <div class="col-12">
+            <h2>{{ $category->name }}</h2>
+            <hr>
+        </div>
+        @forelse ($category->products as $key => $product)
             <div class="col-md-4">
                 <div class="card" style="width: 98%;">
                     @if ($product->photos->count())
@@ -12,6 +16,7 @@
                     @else
                         <img src="{{ asset('assets/img/no-photo.jpg') }}" alt="" class="card-img-top">
                     @endif
+
                     <div class="card-body">
                         <h2 class="card-litle">{{ $product->name }}</h2>
                         <p class="card-text">
@@ -30,15 +35,19 @@
     </div>
     <div class="row front">
         @endif
-        @endforeach
+    @empty
+        <div class="col-12">
+            <h3 class="alert alert-warning">Nenhum produto encontrado para esta categoria!</h3>
+        </div>
+        @endforelse
     </div>
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-12">
             <h2>Lojas Destaque</h2>
-            <hr>
+            <hr> --}}
+    {{-- </div>
 
-        </div>
 
         @foreach ($stores as $store)
             <div class="col-4">
@@ -48,14 +57,11 @@
                 @else
                     <img src="https://via.placeholder.com/450x100.png?text=logo" alt="Loja sem Logo" class="img-fluid">
                 @endif
-
                 <h3>{{ $store->name }}</h3>
                 <p>
                     {{ $store->description }}
                 </p>
-                <a href="{{ route('store.single', ['slug' => $store->slug]) }}" class="btn btn-sm btn-success">Ver
-                    Lojas</a>
             </div>
         @endforeach
-    </div>
+    </div> --}}
 @endsection
