@@ -15,7 +15,7 @@ class Store extends Model
     /**
      * get the options for gererating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -24,7 +24,7 @@ class Store extends Model
 
     public function user()
     {
-       return $this->belonsTo(User::class);
+        return $this->belonsTo(User::class);
     }
 
     public function products()
@@ -34,7 +34,6 @@ class Store extends Model
 
     public function orders()
     {
-        return $this->hasMany(UserOrder::class);
-
+        return $this->belongsToMany(UserOrder::class, 'order_store', null, 'order_id');
     }
 }
