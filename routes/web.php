@@ -12,8 +12,11 @@
 */
 
 use App\Http\Controllers\UserOrderController;
+use App\Mail\UserRegisteredEmail;
 use App\Product;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -165,7 +168,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-
+// Route::get('teste',function(){
+//     $user = User::first();
+//     Mail::to($user->email)->send(new UserRegisteredEmail($user));
+// });
 
 
 Auth::routes();

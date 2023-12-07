@@ -76,7 +76,7 @@ class RegisterController extends Controller
 
     protected function registered(Request $request, $user)
     {
-        Mail::to('$user->email')->send(new UserRegisteredEmail($user));
+        Mail::to($user->email)->send(new UserRegisteredEmail($user));
 
 
         if (session()->has('cart')) {
