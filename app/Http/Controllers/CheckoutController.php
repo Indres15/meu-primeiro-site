@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Payment\PagSeguro\CreditCard;
+use App\Store;
+use App\User;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -32,7 +34,7 @@ class CheckoutController extends Controller
     {
         try {
             $dataPost = $request->all();
-            $user = auth()->user();
+            $user = User::findOrfail(auth()->id());
             $cartItems = session()->get('cart');
             $stores = array_unique(array_column($cartItems, 'store_id'));
             $reference = 'XPTO';
@@ -52,8 +54,11 @@ class CheckoutController extends Controller
 
             $userOrder->stores()->sync($stores);
 
-            session()->forget('cart');
-            session()->forget('pagseguro_session_code');
+            //notificar loja de novo pedido
+            $store = (new Store)->notifyStoreOwners($stores);
+
+            // session()->forget('cart');
+            // session()->forget('pagseguro_session_code');
 
 
             return response()->json([

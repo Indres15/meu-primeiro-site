@@ -166,12 +166,26 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
+Route::get('not', function(){
+    // $user = \App\User::find(30);
+//$user->notify(new \App\Notifications\StoreReceiveNewOrder());
 
+// $notification = $user->notifications->first();
+    // $stores = [31, 30 , 32];
+
+   
+
+
+    // return $user->readNotifications->count();
+
+});
 
 // Route::get('teste',function(){
 //     $user = User::first();
 //     Mail::to($user->email)->send(new UserRegisteredEmail($user));
 // });
+
+
 
 
 Auth::routes();
