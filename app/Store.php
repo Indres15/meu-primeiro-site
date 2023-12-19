@@ -26,7 +26,7 @@ class Store extends Model
 
     public function user()
     {
-        return $this->belonsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function products()
