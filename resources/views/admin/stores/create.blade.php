@@ -30,7 +30,7 @@
 
         <div class="form-group">
             <label>Telefone</label>
-            <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
+            <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror"
                 value="{{ old('phone') }}">
 
             @error('phone')
@@ -67,4 +67,12 @@
         </div>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script>
+        let imPhone = new Inputmask('(92) 9999-9999');
+        imPhone.mask(document.getElementById('phone'));
+    </script>
+
 @endsection
