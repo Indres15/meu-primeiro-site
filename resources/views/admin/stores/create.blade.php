@@ -42,7 +42,7 @@
 
         <div class="form-group">
             <label>Celular/Whatsapp</label>
-            <input type="text" name="mobile_phone" class="form-control @error('mobile_phone') is-invalid @enderror"
+            <input type="text" name="mobile_phone" id="mobile_phone" class="form-control @error('mobile_phone') is-invalid @enderror"
                 value="{{ old('mobile_phone') }}">
 
             @error('mobile_phone')
@@ -71,8 +71,11 @@
 
 @section('scripts')
     <script>
-        let imPhone = new Inputmask('(92) 9999-9999');
+        let imPhone = new Inputmask('(99) 9999-9999');
         imPhone.mask(document.getElementById('phone'));
+
+        let imMoblilePhone = new Inputmask('(99) 9 9999-9999');
+        imMoblilePhone.mask(document.getElementById('mobile_phone'))
     </script>
 
 @endsection
