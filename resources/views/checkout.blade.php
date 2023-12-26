@@ -60,120 +60,17 @@
 
 
     <script>
-        const sessionId = '{{ session()->get('pagseguro_session_code') }}';
+        const sessionId         = '{{ session()->get('pagseguro_session_code') }}';
+        const urlThanks         = '{{ route('checkout.thanks') }}';
+        const urlProccess       = "{{ route('checkout.proccess') }}"
+        const amoutTransaction  = '{{ $cartItems }}';
+        const csrf              = '{{ csrf_token() }}';
+        
 
         PagSeguroDirectPayment.setSessionId(sessionId);
     </script>
 
-    <script>
-        let amoutTransaction = '{{ $cartItems }}';
-        let cardNumber = document.querySelector('input[name=card_number]');
-        let spanBrand = document.querySelector('span.brand');
+    <script src="{{ asset('js/pagseguro_functions.js') }}"></script>
+    <script src="{{ asset('js/pagseguro_events.js') }}"></script>
 
-        cardNumber.addEventListener('keyup', function() {
-            console.log(cardNumber.value);
-            if (cardNumber.value.length >= 6) {
-                PagSeguroDirectPayment.getBrand({
-                    cardBin: cardNumber.value.substr(0, 6),
-                    success: function(res) {
-                        console.log(res);
-                        let imgFlag =
-                            `<img src="https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/68x30/${res.brand.name}.png">`; //adicionando a imagem da bandeira do cartão
-                        spanBrand.innerHTML = imgFlag;
-                        document.querySelector('input[name=card_brand]').value = res.brand.name;
-
-                        getInstallments(amoutTransaction, res.brand.name);
-                    },
-
-                    error: function(err) {
-                        console.log(err);
-                        //spanBrand.innerHTML = '';
-                    },
-
-                    complete: function(res) {
-                        // console.log('complete:' , res);
-                    }
-                });
-
-            }
-        });
-
-        let submitButton = document.querySelector('button.processCheckout');
-
-        submitButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            PagSeguroDirectPayment.createCardToken({
-                cardNumber: document.querySelector('input[name=card_number]').value,
-                brand: document.querySelector('input[name=card_brand]').value,
-                cvv: document.querySelector('input[name=card_cvv]').value,
-                expirationMonth: document.querySelector('input[name=expiration_month]').value,
-                expirationYear: document.querySelector('input[name=expiration_year]').value,
-                success: function(res) {
-                    console.log(res);
-                    proccessPayment(res.card.token)
-                }
-            });
-        });
-
-
-        function proccessPayment(token) {
-            let data = {
-                card_token: token,
-                hash: PagSeguroDirectPayment.getSenderHash(),
-                installment: document.querySelector('select.select_installments').value,
-                card_name: document.querySelector('input[name=card_name]').value,
-                _token: '{{ csrf_token() }}'
-            };
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('checkout.proccess') }}',
-                data: data,
-                dataType: 'json',
-                success: function(res) {
-                    toastr.success(res.data.message, 'Sucesso');
-                    window.location.href = '{{ route('checkout.thanks') }}?order=' + res.data.order;
-                }
-
-            });
-        }
-
-
-        function getInstallments(amount, brand) { //parcelamento do cartão
-            PagSeguroDirectPayment.getInstallments({
-                amount: amount,
-                brand: brand,
-                maxInstallmentNoInterest: 0,
-                success: function(res) {
-                    let selectInstallments = drawSelectInstallments(res.installments[brand]);
-                    document.querySelector('div.installments').innerHTML = selectInstallments;
-                },
-
-                error: function(err) {
-                    console.log(err);
-
-                },
-
-                complete: function(res) {
-
-                },
-            })
-        }
-
-        function drawSelectInstallments(installments) {
-            let select = '<label>Opções de Parcelamento:</label>';
-
-            select += '<select class="form-control select_installments">';
-
-            for (let l of installments) {
-                select +=
-                    `<option value="${l.quantity}|${l.installmentAmount}">${l.quantity}x de ${l.installmentAmount} - Total fica ${l.totalAmount}</option>`;
-            }
-
-            select += '</select>';
-
-            return select;
-        }
-    </script>
 @endsection
