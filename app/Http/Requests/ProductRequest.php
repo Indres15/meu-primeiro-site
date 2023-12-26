@@ -18,6 +18,17 @@ class ProductRequest extends FormRequest
     }
 
     /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    // protected function prepareForValidation()
+    // {
+    //     $this->merge(['price'=> preg_replace(['R',"$",' '],'',$this->price) ]);
+    //     dd($this->all());
+    // }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
