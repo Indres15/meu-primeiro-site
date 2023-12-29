@@ -20,6 +20,11 @@ class Product extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
+    public function getthumbAttribute()
+    {
+        return $this->photos->first()->image;
+    }
     
     public function store()
     {

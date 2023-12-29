@@ -7,7 +7,7 @@
             <div class="col-md-4">
                 <div class="card" style="width: 98%;">
                     @if ($product->photos->count())
-                        <img src="{{ asset('storage/' . $product->photos->first()->image) }}" alt=""
+                        <img src="{{ asset('storage/' . $product->thumn) }}" alt=""
                             class="card-img-top">
                     @else
                         <img src="{{ asset('assets/img/no-photo.jpg') }}" alt="" class="card-img-top">
