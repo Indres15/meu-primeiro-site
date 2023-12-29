@@ -8,6 +8,7 @@ use App\User;
 use Exception;
 use Illuminate\Http\Request;
 use App\Payment\PagSeguro\Notification;
+use App\UserOrder;
 use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
@@ -90,9 +91,32 @@ class CheckoutController extends Controller
 
     public function notification()
     {
+       try{
         $notification = new notification();
+        $notification = $notification->getTransaction();
 
-        var_dump($notification->getTransaction());
+        $reference = base64_decode($notification->getRefence());
+        
+        $userOrder = UserOrder::whereReference($reference);
+        $userOrder->update([
+            'pagseguro status' => $notification->getStatus()
+
+        ]);
+
+        if($notification->getStatus() == 3) {
+            // Liberar o pedido do Usuario... atualizar o status do pedido para em separação
+            //NOtificar o usuário que o pedido foi pago..
+            //Notificar a loja da confirmação do pedido...
+        }
+
+        return response()->json([], 204);
+        // var_dump($notification->getTransaction());
+
+       } catch (\Exception $e) {
+            $message = env('APP_DEBUG') ? $e->getMessage() : '';
+
+            return response()->json(['error' => $message], 500);
+       }
     }
 
     private function makePagSeguroSession()

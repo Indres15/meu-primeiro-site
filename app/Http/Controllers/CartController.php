@@ -27,7 +27,7 @@ class CartController extends Controller
         $product =
             $product = array_merge(
                 $productData,
-                $product->first(['name', 'price', 'store_id'])->toArray()
+                $product->first(['id','name', 'price', 'store_id'])->toArray()
             );
 
         if (session()->has('cart')) {
