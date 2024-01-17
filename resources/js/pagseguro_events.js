@@ -43,7 +43,15 @@ let spanBrand = document.querySelector('span.brand');
                 success: function(res) {
                     console.log(res);
                     proccessPayment(res.card.token)
-                }
+                },
+
+                error: function(err) {
+                    console.log(err.errors);
+
+                    for(let i in err.errors) {
+                        console.log(i);
+                    }
+                },
             });
         });
 
