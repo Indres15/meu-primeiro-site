@@ -4,25 +4,13 @@ namespace App;
 
 use App\Notifications\StoreReceiveNewOrder;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 use App\Notifications\notifyStoreOwners;
+use App\Traits\Slug;
 
 class Store extends Model
 {
-    use HasSlug;
+    use Slug;
     protected $fillable = ['name', 'description', 'phone', 'mobile_phone', 'slug', 'logo'];
-
-
-    /**
-     * get the options for gererating the slug.
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
-    }
 
     public function user()
     {
