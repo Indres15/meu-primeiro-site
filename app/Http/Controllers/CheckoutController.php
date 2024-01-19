@@ -9,13 +9,15 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Payment\PagSeguro\Notification;
 use App\UserOrder;
+use PhpParser\Node\Stmt\TryCatch;
 use Ramsey\Uuid\Uuid;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-        //  session()->forget('pagseguro_session_code');
+        try {
+             //session()->forget('pagseguro_session_code');
         if (!auth()->check()) {
             return redirect()->route('login');
         }
@@ -28,9 +30,16 @@ class CheckoutController extends Controller
 
         $cartItems = array_sum($cartItems);
 
-        //var_dump(session()->get('pagseguro_session_code'));
+        // var_dump(session()->get('pagseguro_session_code'));
 
         return view('checkout', compact('cartItems'));
+
+        } catch (\Exception $e) {
+            session()->forget('pagseguro_session_code');
+            redirect()->route('checkout.index');
+
+        }
+
     }
 
     public function proccess(Request $request)
@@ -72,7 +81,7 @@ class CheckoutController extends Controller
                 ]
             ]);
         } catch (\Exception $e) {
-            $message = env('APP_DEBUG') ? $e->getMessage() : 'Erro ao processar pedido';
+            $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido';
 
             return response()->json([
                 'data' => [
