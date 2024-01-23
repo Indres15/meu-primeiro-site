@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment\PagSeguro\Boleto;
 use App\Payment\PagSeguro\CreditCard;
 use App\Store;
 use App\User;
@@ -49,37 +50,46 @@ class CheckoutController extends Controller
             $user = User::findOrfail(auth()->id());
             $cartItems = session()->get('cart');
             $stores = array_unique(array_column($cartItems, 'store_id'));
-            $reference = Uuid::uuid4()->toString();
+            $reference = Uuid::uuid4();
 
-            $creditCardPayment = new CreditCard($cartItems, $user, $dataPost, $reference);
-            $result = (object) $creditCardPayment->doPayment();
-
-            $userOrder = [
-                'reference' => $reference,
-                'pagseguro_code' => $result->getCode(),
-                'pagseguro_status' => $result->getStatus(),
-                'items' => serialize($cartItems),
-                  
-            ];
-
-            $userOrder = $user->orders()->create($userOrder);
-
-            $userOrder->stores()->sync($stores);
-
-            //notificar loja de novo pedido
-            $store = (new Store())->notifyStoreOwners($stores);
-
-             session()->forget('cart');
-             session()->forget('pagseguro_session_code');
-
+            $Payment = $dataPost['paymentType'] == 'BOLETO' 
+                ? new Boleto($cartItems, $user, $reference, $dataPost['HAS'])
+                : new CreditCard($cartItems, $user, $dataPost, $reference);
+            $result = $Payment->doPayment();
 
             return response()->json([
-                'data' => [
-                    'status' => true,
-                    'message' => 'Pedido criado com sucesso',
-                    'order'   => $reference
-                ]
+                'code' => $result->getCode(),
+                'boleto link' => $result->getPaymentLink()
+
             ]);
+
+        //     $userOrder = [
+        //         'reference' => $reference,
+        //         'pagseguro_code' => $result->getCode(),
+        //         'pagseguro_status' => $result->getStatus(),
+        //         'items' => serialize($cartItems),
+                  
+        //     ];
+
+        //     $userOrder = $user->orders()->create($userOrder);
+
+        //     $userOrder->stores()->sync($stores);
+
+        //     //notificar loja de novo pedido
+        //     $store = (new Store())->notifyStoreOwners($stores);
+
+        //      session()->forget('cart');
+        //      session()->forget('pagseguro_session_code');
+
+
+        //     return response()->json([
+        //         'data' => [
+        //             'status' => true,
+        //             'message' => 'Pedido criado com sucesso',
+        //             'order'   => $reference
+        //         ]
+        //     ]);
+
         } catch (\Exception $e) {
             $message = env('APP_DEBUG') ? simplexml_load_string($e->getMessage()) : 'Erro ao processar pedido';
 

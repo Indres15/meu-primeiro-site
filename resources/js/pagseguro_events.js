@@ -29,19 +29,14 @@ let spanBrand = document.querySelector('span.brand');
             }
         });
 
-        let submitButton = document.querySelector('button.processCheckout');
+ let submitButton = document.querySelectorAll('button.processCheckout');
 
-        submitButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            document.querySelector('div.msg').innerHTML = '';
-            
-            let buttonTarget = event.target;
+    submitButton.forEach(function(el, k) {
+        el.addEventListener('click', function(event){           
+           event.preventDefault();
+           let paymentType = event.target.dataset.paymentType;
 
-            buttonTarget.disabled = true;
-            buttonTarget.innerHTML = 'Carregando...';
-            
-
-
+           if(paymentType === 'CREDITCARD') {
             PagSeguroDirectPayment.createCardToken({
                 cardNumber: document.querySelector('input[name=card_number]').value,
                 brand:      document.querySelector('input[name=card_brand]').value,
@@ -49,19 +44,17 @@ let spanBrand = document.querySelector('span.brand');
                 expirationMonth: document.querySelector('input[name=expiration_month]').value,
                 expirationYear: document.querySelector('input[name=expiration_year]').value,
                 success: function(res) {
-                    proccessPayment(res.card.token, buttonTarget);
-                },
-
-                error: function(err) {
-                    buttonTarget.disabled = false;
-                    buttonTarget.innerHTML = 'Efetuar Pagamenyo';
-
-                    for(let i in err.errors) {
-                        document.querySelector('div.msg').innerHTML = showErrorMessages(errorsMapPagseguroJS(i));
-(i);
-                    }
+                    proccessPayment(res.card.token, paymentType );
                 }
             });
-        });
+
+           }
+
+           if(paymentType === 'BOLETO') {
+            proccessPayment(null, paymentType );
+           }
+            
+    });
+});
 
 

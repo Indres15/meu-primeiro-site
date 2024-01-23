@@ -30,7 +30,7 @@ class Boleto
 
         $boleto->setCurrency("BRL");
 
-        Foreach($this->items as $items) {
+        foreach($this->items as $items) {
             $boleto->addItems()->wihParameters(
                 $items['id'],
                 $items['name'],
@@ -49,11 +49,16 @@ class Boleto
         $boleto->setSender()->setEmail($email);
 
         $boleto->setSender()->setPhone()->withParameters(
+            11,
+            56273440
+        );
+
+        $boleto->setSender()->setDocument()->withParameters(
             'CPF',
             '61355585368'
         );
 
-        $boleto->setSender()->setHash('$this->senderHash');
+        $boleto->setSender()->setHash($this->senderHash);
 
         $boleto->setSender()->SetIp('172.0.0.0');
 
@@ -68,7 +73,7 @@ class Boleto
             'apto. 114'
         );
 
-
+        
 
 
 
