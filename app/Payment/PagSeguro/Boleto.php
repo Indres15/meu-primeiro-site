@@ -73,9 +73,11 @@ class Boleto
             'apto. 114'
         );
 
-        
+        $result = $boleto->register(
+            \PagSeguro\Configuration\Configure::getAccountCredentials()
+        );
 
-
+        return $result;
 
     }
 }

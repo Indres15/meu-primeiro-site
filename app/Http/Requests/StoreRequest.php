@@ -36,8 +36,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'required' => 'este campo é obrigatório',
-            'min' => 'Campo deve ter no mínimo :min caracteres',
-            'image' => 'Arquivo não é uma imagemválida!'
+            'min'      => 'Campo deve ter no mínimo :min caracteres',
+            'image'    => 'Arquivo não é uma imagemválida!'
         ];
     }
 }
